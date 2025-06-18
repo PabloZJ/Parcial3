@@ -1,4 +1,5 @@
 package com.tech_nova.tech_nova.service;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,5 +115,28 @@ public class BoletaService {
         } else {
             return null;
         }
+    }
+    public List<Boleta> getBoletasPorFecha(Date fecha) {
+    return boletaRepository.findBoletasPorFecha(fecha);
+    }
+
+    public List<Boleta> getBoletasPorTipoPago(Integer idTipoPago) {
+        return boletaRepository.findBoletasPorTipoPago(idTipoPago);
+    }
+    
+    public List<Boleta> getBoletasPorUsuario(Integer idUsuario) {
+        return boletaRepository.findBoletasByUsuarioId(idUsuario);
+    }
+
+    public List<Boleta> getBoletasPorFechaYUsuario(Date fecha, Integer idUsuario) {
+    return boletaRepository.findBoletasByFechaAndUsuario(fecha, idUsuario);
+    }
+
+    public List<Boleta> getBoletasPorTipoPagoYMontoMayor(Integer idTipoPago, Integer monto) {
+    return boletaRepository.findBoletasByTipoPagoAndMontoMayor(idTipoPago, monto);
+    }
+
+    public List<Boleta> getBoletasConPedidoEntregado() {
+    return boletaRepository.findBoletasByEstadoPedidoEntregado();
     }
 }
