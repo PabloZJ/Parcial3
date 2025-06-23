@@ -51,7 +51,7 @@ public class EnvioControllerV2 {
 //-------------------------------------------------------------------------------------------------------------------------------
     @GetMapping(value = "/{id}",produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(summary = "Está API obtiene un envio por id ", description = "Está API se encarga de llamar un envio por su id especifico")
-    public ResponseEntity<EntityModel<Envio>> getEnvioById(@PathVariable long id){
+    public ResponseEntity<EntityModel<Envio>> getEnvioById(@PathVariable Long id){
         Envio envio = envioService.obtenerEnvioPorId(id);
         if (envio == null){
             return ResponseEntity.notFound().build();
@@ -70,7 +70,7 @@ public class EnvioControllerV2 {
 //-------------------------------------------------------------------------------------------------------------------------------
     @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(summary = "Está API actualizar un envio", description = "Está API se encarga de actualizar todo un envio")
-        public ResponseEntity<EntityModel<Envio>> putEnvio(@PathVariable long id, @RequestBody Envio envio){
+        public ResponseEntity<EntityModel<Envio>> putEnvio(@PathVariable Long id, @RequestBody Envio envio){
         Envio envioActualizada = envioService.actualizarEnvio(id, envio);
         if (envioActualizada == null){
             return ResponseEntity.notFound().build();
@@ -80,7 +80,7 @@ public class EnvioControllerV2 {
 //-------------------------------------------------------------------------------------------------------------------------------
     @PatchMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(summary = "Está API actualiza un envio parcialmente", description = "Está API se encarga de actualizar parcialmente un envio")
-        public ResponseEntity<EntityModel<Envio>> patchEnvio(@PathVariable long id, @RequestBody Envio envio){
+        public ResponseEntity<EntityModel<Envio>> patchEnvio(@PathVariable Long id, @RequestBody Envio envio){
         Envio envioActualizada = envioService.actualizarEnvioParcial(id, envio);
         if (envioActualizada == null){
             return ResponseEntity.notFound().build();

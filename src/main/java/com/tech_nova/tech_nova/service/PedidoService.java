@@ -5,9 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tech_nova.tech_nova.model.Boleta;
+import com.tech_nova.tech_nova.model.DetallePedido;
 import com.tech_nova.tech_nova.model.EstadoPedido;
 import com.tech_nova.tech_nova.model.Pedido;
 import com.tech_nova.tech_nova.model.Usuario;
+import com.tech_nova.tech_nova.repository.BoletaRepository;
+import com.tech_nova.tech_nova.repository.DetallePedidoRepository;
 import com.tech_nova.tech_nova.repository.EstadoPedidoRepository;
 import com.tech_nova.tech_nova.repository.PedidoRepository;
 import com.tech_nova.tech_nova.repository.UsuarioRepository;
@@ -26,6 +30,12 @@ public class PedidoService {
 
     @Autowired
     private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private BoletaRepository boletaRepository;
+
+    @Autowired
+    private DetallePedidoRepository detallePedidoRepository;
 
 //Obtener lista pedidos
     public List<Pedido> obtenerPedidos() {
@@ -68,7 +78,17 @@ public class PedidoService {
     }
 //Eliminar 
     public void eliminarPedido(Long id) {
-        pedidoRepository.deleteById(id);
+    Pedido pedido = pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
+
+        List<Boleta> boletas = boletaRepository.findByPedido(pedido);
+        for (Boleta boleta : boletas) {
+            boletaRepository.delete(boleta);
+        }
+        List<DetallePedido> detalles = detallePedidoRepository.findByPedido(pedido);
+        for (DetallePedido detalle : detalles) {
+            detallePedidoRepository.delete(detalle);
+        }
+        pedidoRepository.delete(pedido);
     }
 //ActualizarTodo
     public Pedido actualizarPedido(Long id, Pedido pedido) {

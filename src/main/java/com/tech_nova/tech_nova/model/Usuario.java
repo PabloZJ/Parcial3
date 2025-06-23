@@ -2,6 +2,8 @@ package com.tech_nova.tech_nova.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,10 +27,11 @@ public class Usuario {
     @Column(length = 50, nullable=false)
     private String nombreCompleto;
     
-    @Column(unique = true, length = 30, nullable=false)
+    @Column(unique = true, length = 50, nullable=false)
     private String correo;
     
     @Column(nullable = false, length = 20)
+    @JsonIgnore
     private String contrasena;
     
     @Column(nullable = false)

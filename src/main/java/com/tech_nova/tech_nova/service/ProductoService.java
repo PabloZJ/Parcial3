@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tech_nova.tech_nova.model.DetallePedido;
 import com.tech_nova.tech_nova.model.Producto;
 import com.tech_nova.tech_nova.model.ProductoCategoria;
+import com.tech_nova.tech_nova.repository.DetallePedidoRepository;
 import com.tech_nova.tech_nova.repository.ProductoCategoriaRepository;
 import com.tech_nova.tech_nova.repository.ProductoRepository;
 
@@ -21,6 +23,9 @@ public class ProductoService {
 
     @Autowired
     private ProductoRepository productoRepository;
+
+    @Autowired
+    private DetallePedidoRepository detallePedidoRepository;
 
 //Obtener lista productos
     public List<Producto> obtenerProductos() {
@@ -57,7 +62,7 @@ public class ProductoService {
     }
     return null;
     }
-//Guardar producto 
+//Guardar producto validar
 public Producto guardarProducto(Producto producto) {
     Producto productoValidado = buscarProductoCategoria(producto); 
     if(productoValidado != null)
@@ -66,10 +71,19 @@ public Producto guardarProducto(Producto producto) {
         return null;
 }
 
-//Eliminar 
+//Guardar sin validar
+public Producto guardarProductoBee(Producto producto){
+        return productoRepository.save(producto);
+    }
 
+//Eliminar 
     public void eliminarProducto(Long id) {
-        productoRepository.deleteById(id);
+        Producto producto = productoRepository.findById(id).orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        List<DetallePedido> detallePedidos = detallePedidoRepository.findByProducto(producto);
+        for (DetallePedido detalle : detallePedidos) {
+            detallePedidoRepository.delete(detalle);
+        }
+        productoRepository.delete(producto);
     }
 //ActualizarTodo
 

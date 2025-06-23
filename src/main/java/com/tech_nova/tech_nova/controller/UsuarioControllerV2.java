@@ -53,7 +53,7 @@ public class UsuarioControllerV2 {
 //-------------------------------------------------------------------------------------------------------------------------------
     @GetMapping(value = "/{id}",produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(summary = "Está API obtiene un usuario por id ", description = "Está API se encarga de llamar un usuario por su id especifico")
-    public ResponseEntity<EntityModel<Usuario>> getUsuarioById(@PathVariable long id){
+    public ResponseEntity<EntityModel<Usuario>> getUsuarioById(@PathVariable Long id){
         Usuario usuario = usuarioService.obtenerUsuarioPorId(id);
         if (usuario == null){
             return ResponseEntity.notFound().build();
@@ -72,7 +72,7 @@ public class UsuarioControllerV2 {
 //-------------------------------------------------------------------------------------------------------------------------------
     @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(summary = "Está API actualizar un usuario", description = "Está API se encarga de actualizar todo un usuario")
-        public ResponseEntity<EntityModel<Usuario>> putUsuario(@PathVariable long id, @RequestBody Usuario usuario){
+        public ResponseEntity<EntityModel<Usuario>> putUsuario(@PathVariable Long id, @RequestBody Usuario usuario){
         Usuario usuarioActualizada = usuarioService.actualizarUsuario(id, usuario);
         if (usuarioActualizada == null){
             return ResponseEntity.notFound().build();
@@ -82,7 +82,7 @@ public class UsuarioControllerV2 {
 //-------------------------------------------------------------------------------------------------------------------------------
     @PatchMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(summary = "Está API actualiza un usuario parcialmente", description = "Está API se encarga de actualizar parcialmente un usuario")
-        public ResponseEntity<EntityModel<Usuario>> patchUsuario(@PathVariable long id, @RequestBody Usuario usuario){
+        public ResponseEntity<EntityModel<Usuario>> patchUsuario(@PathVariable Long id, @RequestBody Usuario usuario){
         Usuario usuarioActualizada = usuarioService.actualizarUsuarioParcial(id, usuario);
         if (usuarioActualizada == null){
             return ResponseEntity.notFound().build();

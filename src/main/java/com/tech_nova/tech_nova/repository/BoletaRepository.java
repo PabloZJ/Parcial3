@@ -16,9 +16,7 @@ import com.tech_nova.tech_nova.model.TipoPago;
 public interface BoletaRepository extends JpaRepository<Boleta, Long>{
     
     List<Boleta> findByPedido(Pedido pedido);
-
     List<Boleta> findByTipoPago(TipoPago tipoPago);
-
     List<Boleta> findByFechaEmision(Date fechaEmision);
 
     @Query("SELECT b FROM Boleta b WHERE b.tipoPago.id = :idTipoPago")

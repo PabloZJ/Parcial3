@@ -18,7 +18,7 @@ import com.tech_nova.tech_nova.model.DetallePedido;
 import com.tech_nova.tech_nova.service.DetallePedidoService;
 
 @RestController
-@RequestMapping("/api/v1/detalle-producto")
+@RequestMapping("/api/v1/detalle-pedidos")
 public class DetallePedidoController {
 
     @Autowired

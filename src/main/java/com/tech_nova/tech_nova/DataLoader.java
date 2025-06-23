@@ -33,7 +33,7 @@ import com.tech_nova.tech_nova.repository.UsuarioRepository;
 import net.datafaker.Faker;
 
 
-@Profile("dev")
+@Profile("prod")
 @Component
 public class DataLoader  implements CommandLineRunner{
 //----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ public class DataLoader  implements CommandLineRunner{
             tipoPagoRepository.save(tipoPago);
         }
         //-----------------------------------------------------------------------------
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 5; i++){
             ProductoCategoria productoCategoria = new ProductoCategoria();
             productoCategoria.setId(i+1);
             productoCategoria.setNombre(faker.commerce().department());
@@ -103,7 +103,7 @@ public class DataLoader  implements CommandLineRunner{
         //-----------------------------------------------------------------------------
             List<ProductoCategoria> productoCategorias = productoCategoriaRepository.findAll();
             //
-            for (int i = 0; i < 10; i++){
+            for (int i = 0; i < 30; i++){
             Producto producto = new Producto();
             producto.setId(i+1);
             producto.setNombre(faker.commerce().productName());
@@ -126,7 +126,7 @@ public class DataLoader  implements CommandLineRunner{
         List<Usuario> usuarios = usuarioRepository.findAll();
         List<EstadoPedido> estadoPedidos = estadoPedidoRepository.findAll();
         //
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 30; i++){
             Pedido pedido = new Pedido();
             pedido.setId(i+1);
             pedido.setUsuario(usuarios.get(random.nextInt(usuarios.size())));
@@ -134,14 +134,14 @@ public class DataLoader  implements CommandLineRunner{
             pedidoRepository.save(pedido);
         }
         //-----------------------------------------------------------------------------
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 20; i++){
             Envio envio = new Envio();
             envio.setId(i+1);
             envio.setDescripcion(faker.lorem().sentence());
             envioRepository.save(envio);
         }
         //-----------------------------------------------------------------------------
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 18; i++){
             Direccion direccion = new Direccion();
             direccion.setId(i+1);
             direccion.setCalle(faker.address().streetName());
@@ -157,7 +157,7 @@ public class DataLoader  implements CommandLineRunner{
         List<Producto> productos = productoRepository.findAll();
         List<Pedido> pedidos = pedidoRepository.findAll();
         //
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 30; i++){
             DetallePedido detallePedido = new DetallePedido();
             detallePedido.setId(i+1);
             detallePedido.setCantidadProducto(faker.number().numberBetween(1, 5));
@@ -168,7 +168,7 @@ public class DataLoader  implements CommandLineRunner{
         //-----------------------------------------------------------------------------
         List<TipoPago> tipoPagos = tipoPagoRepository.findAll();
         //
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 30; i++){
             Boleta boleta = new Boleta();
             boleta.setId(i+1);
             boleta.setTotalMonto(faker.number().numberBetween(3000, 700000));

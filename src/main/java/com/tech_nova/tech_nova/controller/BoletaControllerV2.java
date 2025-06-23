@@ -1,7 +1,7 @@
 package com.tech_nova.tech_nova.controller;
-import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,8 +28,6 @@ import com.tech_nova.tech_nova.service.BoletaService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api/v2/boletas")
@@ -41,7 +40,7 @@ public class BoletaControllerV2 {
     BoletaModelAssembler assembler;
 //-------------------------------------------------------------------------------------------------------------------------------
     @GetMapping(produces = MediaTypes.HAL_JSON_VALUE)
-    @Operation(summary = "Está API llama a todas las boletaes", description = "Está API se encarga de llamar todas las boletaes existentes en la base de datos")
+    @Operation(summary = "Está API llama a todas las boletas", description = "Está API se encarga de llamar todas las boletas existentes en la base de datos")
     public CollectionModel<EntityModel<Boleta>> getAllBoletas(){
         List<EntityModel<Boleta>> boletas = boletaService.obtenerBoletas().stream()
                 .map(assembler::toModel)
@@ -53,7 +52,7 @@ public class BoletaControllerV2 {
 //-------------------------------------------------------------------------------------------------------------------------------
     @GetMapping(value = "/{id}",produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(summary = "Está API obtiene una boleta por id ", description = "Está API se encarga de llamar una boleta por su id especifico")
-    public ResponseEntity<EntityModel<Boleta>> getBoletaById(@PathVariable long id){
+    public ResponseEntity<EntityModel<Boleta>> getBoletaById(@PathVariable Long id){
         Boleta boleta = boletaService.obtenerBoletaPorId(id);
         if (boleta == null){
             return ResponseEntity.notFound().build();
@@ -71,8 +70,8 @@ public class BoletaControllerV2 {
     }
 //-------------------------------------------------------------------------------------------------------------------------------
     @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
-    @Operation(summary = "Está API actualizar una boleta", description = "Está API se encarga de actualizar toda una boleta")
-        public ResponseEntity<EntityModel<Boleta>> putBoleta(@PathVariable long id, @RequestBody Boleta boleta){
+    @Operation(summary = "Está API actualiza una boleta", description = "Está API se encarga de actualizar toda una boleta")
+        public ResponseEntity<EntityModel<Boleta>> putBoleta(@PathVariable Long id, @RequestBody Boleta boleta){
         Boleta boletaActualizada = boletaService.actualizarBoleta(id, boleta);
         if (boletaActualizada == null){
             return ResponseEntity.notFound().build();
@@ -82,7 +81,7 @@ public class BoletaControllerV2 {
 //-------------------------------------------------------------------------------------------------------------------------------
     @PatchMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(summary = "Está API actualiza una direccón parcialmente", description = "Está API se encarga de actualizar parcialmente una boleta")
-        public ResponseEntity<EntityModel<Boleta>> patchBoleta(@PathVariable long id, @RequestBody Boleta boleta){
+        public ResponseEntity<EntityModel<Boleta>> patchBoleta(@PathVariable Long id, @RequestBody Boleta boleta){
         Boleta boletaActualizada = boletaService.actualizarBoletaParcial(id, boleta);
         if (boletaActualizada == null){
             return ResponseEntity.notFound().build();

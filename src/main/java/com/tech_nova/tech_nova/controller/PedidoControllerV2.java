@@ -52,7 +52,7 @@ public class PedidoControllerV2 {
 //-------------------------------------------------------------------------------------------------------------------------------
     @GetMapping(value = "/{id}",produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(summary = "Está API obtiene un pedido por id ", description = "Está API se encarga de llamar un pedido por su id especifico")
-    public ResponseEntity<EntityModel<Pedido>> getPedidoById(@PathVariable long id){
+    public ResponseEntity<EntityModel<Pedido>> getPedidoById(@PathVariable Long id){
         Pedido pedido = pedidoService.obtenerPedidoPorId(id);
         if (pedido == null){
             return ResponseEntity.notFound().build();
@@ -71,7 +71,7 @@ public class PedidoControllerV2 {
 //-------------------------------------------------------------------------------------------------------------------------------
     @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(summary = "Está API actualizar un pedido", description = "Está API se encarga de actualizar todo un pedido")
-        public ResponseEntity<EntityModel<Pedido>> putPedido(@PathVariable long id, @RequestBody Pedido pedido){
+        public ResponseEntity<EntityModel<Pedido>> putPedido(@PathVariable Long id, @RequestBody Pedido pedido){
         Pedido pedidoActualizada = pedidoService.actualizarPedido(id, pedido);
         if (pedidoActualizada == null){
             return ResponseEntity.notFound().build();
@@ -81,7 +81,7 @@ public class PedidoControllerV2 {
 //-------------------------------------------------------------------------------------------------------------------------------
     @PatchMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(summary = "Está API actualiza un pedido parcialmente", description = "Está API se encarga de actualizar parcialmente un pedido")
-        public ResponseEntity<EntityModel<Pedido>> patchPedido(@PathVariable long id, @RequestBody Pedido pedido){
+        public ResponseEntity<EntityModel<Pedido>> patchPedido(@PathVariable Long id, @RequestBody Pedido pedido){
         Pedido pedidoActualizada = pedidoService.actualizarPedidoParcial(id, pedido);
         if (pedidoActualizada == null){
             return ResponseEntity.notFound().build();

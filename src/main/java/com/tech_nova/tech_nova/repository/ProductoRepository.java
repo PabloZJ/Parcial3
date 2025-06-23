@@ -13,7 +13,6 @@ import com.tech_nova.tech_nova.model.ProductoCategoria;
 public interface ProductoRepository extends JpaRepository<Producto, Long>{
 
 
-    Producto findById(long id);
     Producto findByNombre(String nombre);
     List<Producto> findByStock(int stock);
     List<Producto> findByProductoCategoria(ProductoCategoria idProductoCategoria);

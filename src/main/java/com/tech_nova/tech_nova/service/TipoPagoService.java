@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tech_nova.tech_nova.model.Boleta;
 import com.tech_nova.tech_nova.model.TipoPago;
+import com.tech_nova.tech_nova.repository.BoletaRepository;
 import com.tech_nova.tech_nova.repository.TipoPagoRepository;
 
 import jakarta.transaction.Transactional;
@@ -16,6 +18,9 @@ public class TipoPagoService {
 
     @Autowired
     private TipoPagoRepository tipoPagoRepository;
+
+    @Autowired
+    private BoletaRepository boletaRepository;
 
     //Obtener TipoPagos
     public List<TipoPago> obtenerTipoPagos(){
@@ -32,9 +37,14 @@ public class TipoPagoService {
         return tipoPagoRepository.save(TipoPago);
 
     }
-    //Eliminar TipoPagoa
+    //Eliminar TipoPago
     public void eliminarTipoPago(Long id){
-        tipoPagoRepository.deleteById(id);
+        TipoPago tipoPago = tipoPagoRepository.findById(id).orElseThrow(() -> new RuntimeException("Tipo pago no encontrado"));
+        List<Boleta> boletas = boletaRepository.findByTipoPago(tipoPago);
+        for(Boleta boleta : boletas) {
+            boletaRepository.delete(boleta);
+        }
+        tipoPagoRepository.delete(tipoPago);
     }
     //ActualizarTodo
     public TipoPago actualizarTipoPago(Long id, TipoPago TipoPago){

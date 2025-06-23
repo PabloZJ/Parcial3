@@ -54,7 +54,7 @@ public class DireccionControllerV2 {
 //-------------------------------------------------------------------------------------------------------------------------------
     @GetMapping(value = "/{id}",produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(summary = "Está API obtiene una dirección por id ", description = "Está API se encarga de llamar una dirección por su id especifico")
-    public ResponseEntity<EntityModel<Direccion>> getDireccionById(@PathVariable long id){
+    public ResponseEntity<EntityModel<Direccion>> getDireccionById(@PathVariable Long id){
         Direccion direccion = direccionService.obtenerDireccionPorId(id);
         if (direccion == null){
             return ResponseEntity.notFound().build();
@@ -73,7 +73,7 @@ public class DireccionControllerV2 {
 //-------------------------------------------------------------------------------------------------------------------------------
     @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(summary = "Está API actualizar una dirección", description = "Está API se encarga de actualizar toda una dirección")
-    public ResponseEntity<EntityModel<Direccion>> putDireccion(@PathVariable long id, @RequestBody Direccion direccion){
+    public ResponseEntity<EntityModel<Direccion>> putDireccion(@PathVariable Long id, @RequestBody Direccion direccion){
         Direccion direccionActualizada = direccionService.actualizarDireccion(id, direccion);
         if (direccionActualizada == null){
             return ResponseEntity.notFound().build();
@@ -83,7 +83,7 @@ public class DireccionControllerV2 {
 //-------------------------------------------------------------------------------------------------------------------------------
     @PatchMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(summary = "Está API actualiza una direccón parcialmente", description = "Está API se encarga de actualizar parcialmente una dirección")
-        public ResponseEntity<EntityModel<Direccion>> patchDireccion(@PathVariable long id, @RequestBody Direccion direccion){
+        public ResponseEntity<EntityModel<Direccion>> patchDireccion(@PathVariable Long id, @RequestBody Direccion direccion){
         Direccion direccionActualizada = direccionService.actualizarDireccionParcial(id, direccion);
         if (direccionActualizada == null){
             return ResponseEntity.notFound().build();

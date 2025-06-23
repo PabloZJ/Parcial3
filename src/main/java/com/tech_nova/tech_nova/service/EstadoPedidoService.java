@@ -4,8 +4,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tech_nova.tech_nova.model.Boleta;
+import com.tech_nova.tech_nova.model.DetallePedido;
 import com.tech_nova.tech_nova.model.EstadoPedido;
+import com.tech_nova.tech_nova.model.Pedido;
+import com.tech_nova.tech_nova.repository.BoletaRepository;
+import com.tech_nova.tech_nova.repository.DetallePedidoRepository;
 import com.tech_nova.tech_nova.repository.EstadoPedidoRepository;
+import com.tech_nova.tech_nova.repository.PedidoRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -16,6 +22,15 @@ public class EstadoPedidoService {
     
     @Autowired
     private EstadoPedidoRepository estadoPedidoRepository;
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
+    @Autowired
+    private BoletaRepository boletaRepository;
+
+    @Autowired
+    private DetallePedidoRepository detallePedidoRepository;
 
     //Obtener
     public List<EstadoPedido> obtenerEstadoPedidos(){
@@ -34,7 +49,20 @@ public class EstadoPedidoService {
     }
     //Eliminar
     public void eliminarEstadoPedido(Long id){
-        estadoPedidoRepository.deleteById(id);
+        EstadoPedido estadoPedido = estadoPedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Estado de pedido no encontrado"));
+        List<Pedido> pedidos = pedidoRepository.findByEstadoPedido(estadoPedido);
+        for(Pedido pedido : pedidos) {
+            List<Boleta> boletas = boletaRepository.findByPedido(pedido);
+            for (Boleta boleta : boletas) {
+                boletaRepository.delete(boleta);
+            }
+            List<DetallePedido> detalles = detallePedidoRepository.findByPedido(pedido);
+            for (DetallePedido detalle : detalles) {
+                detallePedidoRepository.delete(detalle);
+            }
+            pedidoRepository.delete(pedido);
+        }
+        estadoPedidoRepository.delete(estadoPedido);
     }
     //ActualizarTodo
     public EstadoPedido actualizarEstadoPedido(Long id, EstadoPedido estadoPedido){
